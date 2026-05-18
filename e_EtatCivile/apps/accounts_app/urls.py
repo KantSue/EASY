@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     # Inscription citoyen
     path('register/',  views.CitoyenRegisterView.as_view(), name='register'),
+    path('agents/',               views.AgentCreateView.as_view(),     name='agent-create'),
 
     # Connexion — tous rôles (citoyen, agent, administrateur)
     path('login/',     views.LoginView.as_view(),           name='login'),

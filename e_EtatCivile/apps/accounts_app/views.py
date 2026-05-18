@@ -28,8 +28,8 @@ class AgentCreateView(APIView):
         if not payload:
             return Response({"error": "Token invalide ou expiré."}, status=401)
 
-        if payload['role'] != 'administrateur':
-            return Response({"error": "Accès réservé aux administrateurs."}, status=403)
+        if payload['role'].lower() != 'administrateur':
+             return Response({"error": "Accès réservé aux administrateurs."}, status=403)
 
         serializer = AgentCreateSerializer(data=request.data)
         if serializer.is_valid():
@@ -161,7 +161,7 @@ class ProfilView(APIView):
             'administrateur': ['nom_user', 'prenom_user', 'mdp_user', 'email'],
         }
 
-        champs_autorises = CHAMPS_PAR_ROLE.get(user.role, [])
+        champs_autorises = CHAMPS_PAR_ROLE.get(user.role.lower(), [])
 
         for champ in champs_autorises:
             if champ in request.data:
@@ -199,8 +199,10 @@ class ProfilView(APIView):
                     setattr(user, champ, request.data[champ])
 
         user.save()
+        user.refresh_from_db()   # ← ajouter cette ligne
         nouveau_token = generate_jwt(user)
 
+                        
         return Response({
             "message" : "Profil mis à jour.",
             "token"   : nouveau_token,

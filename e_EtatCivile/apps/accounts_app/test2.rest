@@ -3,8 +3,8 @@ POST http://127.0.0.1:8000/accounts/login/
 Content-Type: application/json
 
 {
-    "email"   : "julie@gmail.com",
-    "mdp_user": "citoyenEC"
+    "email"   : "Lucie@gmail.com",
+    "mdp_user": "123"
 }
 
 ###
@@ -19,7 +19,20 @@ Content-Type: application/json
     "id_commune"      : 1,
     "id_arondissement": 1
 }
+### Créer un agent (admin uniquement)
+POST http://127.0.0.1:8000/accounts/agents/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJlbWFpbCI6Ikx1Y2llQGdtYWlsLmNvbSIsInJvbGUiOiJBZG1pbmlzdHJhdGV1ciIsIm5vbSI6Ikx1Y2llIFJha290byIsImlkX2Fyb25kaXNzZW1lbnQiOjEsImlkX2NvbW11bmUiOjEsImV4cCI6MTc3OTE3ODI3N30.qKflhKRVYHN_8dywhiNqIUn8EMHq1Ztuu5nncLlbyW8
 
+{
+  "nom_user"         : "Rasoa",
+  "prenom_user"      : "Suzanne",
+  "email"            : "suz.agent@email.mg",
+  "matricule"        : 12345,
+  "id_commune"       : 1,
+  "id_arondissement" : 4
+}
+###
 ###
 GET http://127.0.0.1:8000/accounts/profil/
 Content-Type: application/json

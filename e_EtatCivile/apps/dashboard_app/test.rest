@@ -1,5 +1,5 @@
 
-GET http://127.0.0.1:8000/dashboard/demandes/historique/
+GET http://127.0.0.1:8000/dashboard/demandes/31/
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJlbWFpbCI6Imhpa29yaWFudHNvYWdsb3JpYUBnbWFpbC5jb20iLCJyb2xlIjoiQWdlbnQiLCJub20iOiJHbG9yaWEgSGlrb3JpYW50c29hIiwiaWRfYXJvbmRpc3NlbWVudCI6MSwiaWRfY29tbXVuZSI6MSwiZXhwIjoxNzc4NjQ0Mjk2fQ._82bRBt-nrUNSfu0sWSZxzApOJdIdBdYXV5KWhl1lKg
 
@@ -7,8 +7,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJlb
 ###
 GET http://127.0.0.1:8000/dashboard/actes/21
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJlbWFpbCI6Imhpa29yaWFudHNvYWdsb3JpYUBnbWFpbC5jb20iLCJyb2xlIjoiQWdlbnQiLCJub20iOiJHbG9yaWEgSGlrb3JpYW50c29hIiwiaWRfYXJvbmRpc3NlbWVudCI6MSwiaWRfY29tbXVuZSI6MSwiZXhwIjoxNzc4NjQ4OTcxfQ.gtNvG25GSrGXty_238TvJC7oMfmb2ZCV-fBKbkxRGEM
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJlbWFpbCI6Imhpa29yaWFudHNvYWdsb3JpYUBnbWFpbC5jb20iLCJyb2xlIjoiQWdlbnQiLCJub20iOiJHbG9yaWEgSGlrb3JpYW50c29hIiwiaWRfYXJvbmRpc3NlbWVudCI6NCwiaWRfY29tbXVuZSI6MSwiZXhwIjoxNzc5MTMwMTA0fQ.ctE3jlUb6NELivWNFm4BOtpnLUZBbtybaLyMXDpwrUY
 ###
 GET http://127.0.0.1:8000/dashboard/recherche/suggestions/?q=rak
 Content-Type: application/json
@@ -160,6 +159,20 @@ Content-Type: application/json
     "email": "hikoriantsoagloria@gmail.com",
     "mdp_user": "vnX)74r1"
 }
+###
+PATCH http://127.0.0.1:8000/accounts/profil/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJlbWFpbCI6Imhpa29yaWFudHNvYWdsb3JpYUBnbWFpbC5jb20iLCJyb2xlIjoiQWdlbnQiLCJub20iOiJHbG9yaWEgR2xvcmlhaGhoIiwiaWRfYXJvbmRpc3NlbWVudCI6NCwiaWRfY29tbXVuZSI6MSwiZXhwIjoxNzc5MTY4MDMxfQ.M0c4NjeLI42kHbwqaIGNU1bN_3ZYILvHM1oETiw8c2o
+
+{
+  "nom_user": "Hikoriantsoa",
+  "prenom_user": "Gloriah"
+}
+
+###
+GET http://127.0.0.1:8000/dashboard/demandes/historique/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJlbWFpbCI6Imhpa29yaWFudHNvYWdsb3JpYUBnbWFpbC5jb20iLCJyb2xlIjoiQWdlbnQiLCJub20iOiJIaWtvcmlhbnRzb2EgR2xvcmlhaCIsImlkX2Fyb25kaXNzZW1lbnQiOjQsImlkX2NvbW11bmUiOjEsImV4cCI6MTc3OTE3MTcxM30.mIbmAfxKfWonlJfqxVDOESERV5xUyGG3YkU9W81ZTKs
 ###
 GET http://127.0.0.1:8000/dashboard/arrondissements/
 Content-Type: application/json

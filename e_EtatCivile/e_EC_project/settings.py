@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '10.167.229.55',
+    '10.130.207.55',
     '10.210.105.55',  # ancienne IP, garder au cas où
 ]
 
@@ -64,11 +64,13 @@ MIDDLEWARE = [
     
 ]
 CORS_ALLOWED_ORIGINS=[
-    'http://192.168.56.1:3000',
-    'http://10.210.105.55:3000',
-    'http://192.168.56.1:3000',
-    'http://localhost:3000',
     
+      'http://192.168.56.1:3000',
+    'http://10.210.105.55:3000',
+    'http://10.167.229.55:3000',  # ← nouvelle IP
+    'http://localhost:3000',
+    'http://localhost:5173',       # ← sans le / à la fin
+    'http://127.0.0.1:5173',
 ]
 ROOT_URLCONF = 'e_EC_project.urls'
 

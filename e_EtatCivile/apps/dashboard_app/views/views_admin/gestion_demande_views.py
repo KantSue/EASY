@@ -38,12 +38,16 @@ class DemandeActeViews(APIView):
             photo_cin = None
             if pieces.exists():
                 photo_cin = pieces.first().url_fichier
-
+            
             serializer = DemandeReadSerializer(demande)
             data = dict(serializer.data)  
-            data['photo_cin'] = f"http://10.210.105.55:8000/media/{photo_cin}" if photo_cin else None
+            if photo_cin:
+                data['photo_cin'] = request.build_absolute_uri(f"/media/{photo_cin}")
+            else:
+                data['photo_cin'] = None
 
             return Response(data, status=200)
+        
 
         token = (
             request.COOKIES.get('token') or

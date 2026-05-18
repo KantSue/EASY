@@ -34,8 +34,6 @@ class PaiementEtDemandeView(APIView):
             return Response({"error": "Numéro de téléphone requis"}, status=400)
         if not num_acte:
             return Response({"error": "Numéro d'acte requis"}, status=400)
-        if not Acte.objects.filter(num_acte=num_acte).exists():
-            return Response({"error": "Numéro d'acte introuvable dans les archives."}, status=400)
         if not photo:
             return Response({"error": "Photo CIN obligatoire"}, status=400)
 

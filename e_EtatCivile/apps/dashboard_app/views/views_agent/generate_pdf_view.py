@@ -82,7 +82,7 @@ class PdfCitoyenView(APIView):
         if not demande.url_pdf:
             return Response({"error": "PDF non disponible"}, status=404)
 
-        url_pdf = f"http://10.210.105.55:8000/media/{demande.url_pdf}"
+        url_pdf = request.build_absolute_uri(f"/media/{demande.url_pdf}")
         return Response({
             "url_pdf"    : url_pdf,
             "num_acte"   : demande.num_acte,
@@ -110,10 +110,10 @@ class EnvoyerPDFView(APIView):
         if not demande.url_pdf:
             return Response({"error": "PDF non encore généré"}, status=400)
 
-        email_dest = request.data.get('email')
-        if not email_dest:
-            return Response({"error": "Email destinataire manquant"}, status=400)
-
+        try:
+            email_dest = demande.id_citoyen.id_user.email
+        except:
+            return Response({"error": "Email citoyen introuvable"}, status=400)
         # Lire le PDF
         import os
         from django.conf import settings as django_settings
