@@ -25,10 +25,11 @@ export default function Topbar({ titre, nom, role }: Props) {
     >
       {/* ── Titre ── */}
       <div>
-        <p className="text-xs mb-1" style={{ color:'#94a3b8' }}>
-          Bienvenue,{' '}
-          <span className="font-semibold" style={{ color:'#f0b429' }}>{nom || '…'}</span>
-        </p>
+        <img
+            src="/logo.png"
+            alt="Logo secondaire"
+            className="w-10 h-10 object-contain drop-shadow-2xl"
+          />
         <h1
           className="text-2xl font-bold"
           style={{ color:'#1a3a6b', fontFamily:'Sora,sans-serif' }}
@@ -59,10 +60,7 @@ export default function Topbar({ titre, nom, role }: Props) {
         </button>
 
         {/* Cloche */}
-        <button className="btn btn-ghost btn-circle btn-sm relative">
-          <Bell size={19} style={{ color:'#64748b' }} />
-          <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500" />
-        </button>
+        
 
         {/* Avatar */}
         <div className="flex items-center gap-2">

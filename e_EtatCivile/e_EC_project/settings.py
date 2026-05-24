@@ -27,10 +27,7 @@ SECRET_KEY = 'django-insecure-oqq(y2@e-zi@42k4lv4^sg=opb&ykaflc53p47lhd4lh87$_a4
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '10.130.207.55',
-    '10.210.105.55',  # ancienne IP, garder au cas où
+    '*',
 ]
 
 

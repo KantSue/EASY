@@ -1,5 +1,6 @@
-// src/pages/citoyen/Suivi.tsx
+// src/pages/citoyens/Suivi.tsx
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   FileText, Download, Clock,
   CheckCircle, XCircle, Award, AlertCircle,
@@ -7,25 +8,26 @@ import {
 import SharedLayout from '../../components/SharedLayout';
 import { demandeService } from '../../service/demandeService';
 
-const STATUT_CFG: Record<string, { bg: string; color: string; label: string; icon: React.ReactNode }> = {
-  'EN ATTENTE': { bg:'rgba(245,158,11,0.1)',  color:'#b45309', label:'En attente', icon:<Clock       size={14}/> },
-  'VALIDER'   : { bg:'rgba(16,185,129,0.1)',  color:'#047857', label:'Validée',    icon:<CheckCircle size={14}/> },
-  'REFUSER'   : { bg:'rgba(239,68,68,0.1)',   color:'#b91c1c', label:'Refusée',    icon:<XCircle     size={14}/> },
-  'TERMINER'  : { bg:'rgba(139,92,246,0.1)',  color:'#6d28d9', label:'Terminée',   icon:<Award       size={14}/> },
-};
-
-const TYPE_COLOR: Record<string, string> = {
-  'acte naissance': '#0891b2',
-  'acte mariage'  : '#e11d48',
-  'acte décès'    : '#7c3aed',
-};
-
 export default function CitoyenSuivi() {
+  const { t }                                   = useTranslation();
   const [demandes,    setDemandes]    = useState<any[]>([]);
   const [loading,     setLoading]     = useState(true);
   const [downloading, setDownloading] = useState<number | null>(null);
   const [filtre,      setFiltre]      = useState('');
   const [msg,         setMsg]         = useState<{ type:'ok'|'err'; text:string } | null>(null);
+
+  const STATUT_CFG: Record<string, { bg: string; color: string; label: string; icon: React.ReactNode }> = {
+    'EN ATTENTE': { bg:'rgba(245,158,11,0.1)',  color:'#b45309', label: t('statut.en_attente'), icon:<Clock       size={14}/> },
+    'VALIDER'   : { bg:'rgba(16,185,129,0.1)',  color:'#047857', label: t('statut.valider'),    icon:<CheckCircle size={14}/> },
+    'REFUSER'   : { bg:'rgba(239,68,68,0.1)',   color:'#b91c1c', label: t('statut.refuser'),    icon:<XCircle     size={14}/> },
+    'TERMINER'  : { bg:'rgba(139,92,246,0.1)',  color:'#6d28d9', label: t('statut.terminer'),   icon:<Award       size={14}/> },
+  };
+
+  const TYPE_COLOR: Record<string, string> = {
+    'acte naissance': '#0891b2',
+    'acte mariage'  : '#e11d48',
+    'acte décès'    : '#7c3aed',
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -36,27 +38,21 @@ export default function CitoyenSuivi() {
     return () => { cancelled = true; };
   }, []);
 
- const telecharger = async (id: number) => {
-  setDownloading(id);
-  try {
-    const r   = await demandeService.getPDFCitoyen(id);
-    const url = r.data?.url_pdf;
-    if (!url) { setMsg({ type:'err', text:'PDF non disponible.' }); return; }
+  const telecharger = async (id: number) => {
+    setDownloading(id);
+    try {
+      const r   = await demandeService.getPDFCitoyen(id);
+      const url = r.data?.url_pdf;
+      if (!url) { setMsg({ type:'err', text:'PDF non disponible.' }); return; }
+      window.open(url, '_blank');
+      setMsg({ type:'ok', text: t('suivi.pdf_ouvert') });
+    } catch (err: any) {
+      const msgErr = err?.response?.data?.error || err?.response?.data?.detail || t('suivi.pdf_erreur');
+      setMsg({ type:'err', text: String(msgErr) });
+    } finally { setDownloading(null); }
+  };
 
-    // Ouvrir dans un nouvel onglet
-    window.open(url, '_blank');
-    setMsg({ type:'ok', text:'PDF ouvert dans un nouvel onglet.' });
-  } catch (err: any) {
-    const msgErr = err?.response?.data?.error
-      || err?.response?.data?.detail
-      || 'Impossible de télécharger le PDF.';
-    setMsg({ type:'err', text: String(msgErr) });
-  } finally { setDownloading(null); }
-};
-
-  const filtrees = filtre
-    ? demandes.filter(d => d.statut_demande === filtre)
-    : demandes;
+  const filtrees = filtre ? demandes.filter(d => d.statut_demande === filtre) : demandes;
 
   if (loading) return (
     <SharedLayout>
@@ -74,14 +70,13 @@ export default function CitoyenSuivi() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-bold" style={{ color:'#1a3a6b', fontFamily:'Sora,sans-serif' }}>
-              Mes demandes
+              {t('suivi.titre')}
             </h1>
             <p className="text-sm mt-0.5" style={{ color:'#94a3b8' }}>
-              {demandes.length} demande{demandes.length > 1 ? 's' : ''} au total
+              {demandes.length} {t('suivi.total_label')}
             </p>
           </div>
 
-          {/* Filtre statut */}
           <select
             className="select border-2 rounded-xl text-sm"
             style={{ borderColor:'#e2e8f0', background:'#f8fafc', color:'#334155', height:44 }}
@@ -89,23 +84,21 @@ export default function CitoyenSuivi() {
             onChange={e => setFiltre(e.target.value)}
             aria-label="Filtrer par statut"
           >
-            <option value="">Tous les statuts</option>
-            <option value="EN ATTENTE">En attente</option>
-            <option value="VALIDER">Validées</option>
-            <option value="REFUSER">Refusées</option>
-            <option value="TERMINER">Terminées</option>
+            <option value="">{t('suivi.tous_statuts')}</option>
+            <option value="EN ATTENTE">{t('statut.en_attente')}</option>
+            <option value="VALIDER">{t('statut.valider')}</option>
+            <option value="REFUSER">{t('statut.refuser')}</option>
+            <option value="TERMINER">{t('statut.terminer')}</option>
           </select>
         </div>
 
         {/* Message */}
         {msg && (
-          <div
-            className="flex items-center gap-3 p-4 rounded-xl"
+          <div className="flex items-center gap-3 p-4 rounded-xl"
             style={{
               background : msg.type === 'ok' ? 'rgba(16,185,129,0.08)' : 'rgba(239,68,68,0.08)',
               border     : `1px solid ${msg.type === 'ok' ? 'rgba(16,185,129,0.25)' : 'rgba(239,68,68,0.25)'}`,
-            }}
-          >
+            }}>
             {msg.type === 'ok'
               ? <CheckCircle size={18} style={{ color:'#10b981', flexShrink:0 }} />
               : <AlertCircle size={18} style={{ color:'#ef4444', flexShrink:0 }} />
@@ -123,24 +116,20 @@ export default function CitoyenSuivi() {
             <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background:'rgba(26,58,107,0.08)' }}>
               <FileText size={28} style={{ color:'#1a3a6b' }} />
             </div>
-            <p className="font-medium" style={{ color:'#64748b' }}>Aucune demande</p>
+            <p className="font-medium" style={{ color:'#64748b' }}>{t('suivi.aucune_demande')}</p>
             <p className="text-sm" style={{ color:'#94a3b8' }}>
-              {filtre ? 'Aucune demande avec ce statut' : 'Vous n\'avez pas encore déposé de demande'}
+              {filtre ? t('suivi.aucune_statut') : t('suivi.aucune_depot')}
             </p>
           </div>
         ) : (
           <div className="flex flex-col gap-4">
             {filtrees.map((d: any, i: number) => {
-              const st    = STATUT_CFG[d.statut_demande] ?? { bg:'#f1f5f9', color:'#64748b', label:d.statut_demande, icon:null };
-              const tcol  = TYPE_COLOR[d.type_acte] ?? '#1a3a6b';
-
+              const st   = STATUT_CFG[d.statut_demande] ?? { bg:'#f1f5f9', color:'#64748b', label:d.statut_demande, icon:null };
+              const tcol = TYPE_COLOR[d.type_acte] ?? '#1a3a6b';
               return (
-                <div
-                  key={i}
-                  className="bg-white rounded-xl p-5"
-                  style={{ boxShadow:'0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)', border:'1px solid #f1f5f9' }}
-                >
-                  {/* Header card */}
+                <div key={i} className="bg-white rounded-xl p-5"
+                  style={{ boxShadow:'0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)', border:'1px solid #f1f5f9' }}>
+
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background:`${tcol}18` }}>
@@ -153,45 +142,39 @@ export default function CitoyenSuivi() {
                         <div className="text-xs mt-0.5" style={{ color:'#94a3b8' }}>{d.type_acte}</div>
                       </div>
                     </div>
-                    <span
-                      className="badge font-semibold px-3 py-2 gap-1.5"
-                      style={{ background:st.bg, color:st.color, border:'none', borderRadius:8 }}
-                    >
+                    <span className="badge font-semibold px-3 py-2 gap-1.5"
+                      style={{ background:st.bg, color:st.color, border:'none', borderRadius:8 }}>
                       {st.icon}{st.label}
                     </span>
                   </div>
 
-                  {/* Infos */}
-                  <div className="flex items-center gap-6 py-3" style={{ borderTop:'1px solid #f8fafc', borderBottom: d.motif_refus || d.statut_demande === 'TERMINER' ? '1px solid #f8fafc' : 'none' }}>
+                  <div className="flex items-center gap-6 py-3"
+                    style={{ borderTop:'1px solid #f8fafc', borderBottom: d.motif_refus || d.statut_demande === 'TERMINER' ? '1px solid #f8fafc' : 'none' }}>
                     <div>
-                      <div className="text-xs" style={{ color:'#94a3b8' }}>Date dépôt</div>
+                      <div className="text-xs" style={{ color:'#94a3b8' }}>{t('suivi.date_depot')}</div>
                       <div className="text-sm font-medium mt-0.5" style={{ color:'#334155' }}>
                         {new Date(d.date_depot).toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' })}
                       </div>
                     </div>
                     {d.num_acte && (
                       <div>
-                        <div className="text-xs" style={{ color:'#94a3b8' }}>N° acte</div>
+                        <div className="text-xs" style={{ color:'#94a3b8' }}>{t('suivi.num_acte')}</div>
                         <div className="text-sm font-medium mt-0.5" style={{ color:'#334155' }}>{d.num_acte}</div>
                       </div>
                     )}
                   </div>
 
-                  {/* Motif refus */}
                   {d.motif_refus && (
-                    <div
-                      className="flex items-start gap-2 p-3 rounded-xl mt-3"
-                      style={{ background:'rgba(245,158,11,0.08)', border:'1px solid rgba(245,158,11,0.2)' }}
-                    >
+                    <div className="flex items-start gap-2 p-3 rounded-xl mt-3"
+                      style={{ background:'rgba(245,158,11,0.08)', border:'1px solid rgba(245,158,11,0.2)' }}>
                       <AlertCircle size={14} style={{ color:'#f59e0b', flexShrink:0, marginTop:1 }} />
                       <div>
-                        <div className="text-xs font-semibold" style={{ color:'#b45309' }}>Motif de refus</div>
+                        <div className="text-xs font-semibold" style={{ color:'#b45309' }}>{t('suivi.motif_refus')}</div>
                         <div className="text-xs mt-0.5" style={{ color:'#92400e' }}>{d.motif_refus}</div>
                       </div>
                     </div>
                   )}
 
-                  {/* Bouton PDF si TERMINER */}
                   {d.statut_demande === 'TERMINER' && (
                     <div className="flex gap-3 mt-4">
                       <button
@@ -202,7 +185,7 @@ export default function CitoyenSuivi() {
                       >
                         {downloading === d.id_demande
                           ? <span className="loading loading-spinner loading-sm"/>
-                          : <><Download size={16}/>Télécharger mon acte</>
+                          : <><Download size={16}/>{t('suivi.telecharger')}</>
                         }
                       </button>
                     </div>

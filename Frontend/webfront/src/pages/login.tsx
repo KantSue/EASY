@@ -1,11 +1,13 @@
-// src/pages/Login.tsx
+// src/pages/login.tsx
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, Lock, Eye, EyeOff, LogIn, Shield, FileText, Zap } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Mail, Lock, Eye, EyeOff, LogIn, Shield, FileText, Zap, LucideHeading3 } from 'lucide-react';
 import { authService } from '../service/authService';
 
 export default function Login() {
-  const navigate = useNavigate();
+  const navigate   = useNavigate();
+  const { t, i18n } = useTranslation();
   const [email,   setEmail]   = useState('');
   const [mdp,     setMdp]     = useState('');
   const [showMdp, setShowMdp] = useState(false);
@@ -24,144 +26,254 @@ export default function Login() {
       else if (role === 'agent')          navigate('/agent/file-attente');
       else if (role === 'administrateur') navigate('/admin/dashboard');
     } catch (err: any) {
-      setError(err?.response?.data?.detail || 'Email ou mot de passe incorrect.');
+      setError(err?.response?.data?.detail || t('login.erreur'));
     } finally { setLoading(false); }
   };
 
-  
+  const toggleLang = () => {
+    const next = i18n.language === 'fr' ? 'mg' : 'fr';
+    i18n.changeLanguage(next);
+    localStorage.setItem('lang', next);
+  };
+
   const features = [
-    { icon: Shield,   text: 'Connexion sécurisée JWT'    },
-    { icon: FileText, text: 'Actes civils numérisés'     },
-    { icon: Zap,      text: 'Service rapide et fiable'   },
+    { icon: Shield,   text: t('login.feature1') },
+    { icon: FileText, text: t('login.feature2') },
+    { icon: Zap,      text: t('login.feature3') },
   ];
+
   return (
     <div className="min-h-screen flex">
+{/* ══ Panneau gauche ══ */}
+<div
+  className="hidden lg:flex flex-col items-center justify-center flex-1 relative overflow-hidden"
+  style={{
+    background:
+      'radial-gradient(ellipse at top, #1e457f 0%, #0d2348 50%, #081832 100%)',
+  }}
+>
+  {/* Texture pointillée */}
+  <div
+    className="absolute inset-0 opacity-60"
+    style={{
+      backgroundImage:
+        'radial-gradient(circle at 1px 1px, rgba(240,180,41,0.10) 1px, transparent 0)',
+      backgroundSize: '38px 38px',
+    }}
+  />
 
-      {/* ══════════════════════════════════════════
-          PANNEAU GAUCHE — bleu marine
-      ══════════════════════════════════════════ */}
-     <div
-        className="hidden lg:flex flex-col items-center justify-center flex-1 relative overflow-hidden"
-        style={{ background: 'linear-gradient(160deg, #1a3a6b 0%, #0d2348 100%)' }}
-      >
-        {/* Grille décorative */}
+  {/* Halos dorés animés */}
+  <div
+    className="absolute -top-32 -right-32 w-[28rem] h-[28rem] rounded-full blur-3xl animate-pulse"
+    style={{
+      background:
+        'radial-gradient(circle, rgba(240,180,41,0.18) 0%, transparent 70%)',
+      animationDuration: '6s',
+    }}
+  />
+  <div
+    className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full blur-3xl animate-pulse"
+    style={{
+      background:
+        'radial-gradient(circle, rgba(240,180,41,0.12) 0%, transparent 70%)',
+      animationDuration: '8s',
+    }}
+  />
+
+
+  {/* Logo en haut à gauche */}
+  <img
+    src="/logo.png"
+    alt="Logo"
+    className="absolute top-6 left-6 w-24 h-24 object-contain drop-shadow-2xl z-20 transition-transform hover:scale-105"
+  />
+
+  {/* Badge officiel en haut à droite */}
+  <div
+    className="absolute top-8 right-8 z-20 px-3 py-1.5 rounded-full text-[10px] font-semibold tracking-widest uppercase backdrop-blur-md"
+    style={{
+      background: 'rgba(240,180,41,0.08)',
+      border: '1px solid rgba(240,180,41,0.25)',
+      color: '#f0b429',
+    }}
+  >
+    ● Officiel
+  </div>
+
+  {/* Contenu principal */}
+  <div className="relative z-10 text-center px-12 max-w-md">
+    {/* Logo central avec anneau doré */}
+    <div className="flex flex-col items-center mb-8">
+      <div className="relative mb-5">
         <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(240,180,41,0.08) 1px, transparent 0)',
-            backgroundSize: '40px 40px',
-          }}
+          className="absolute inset-0 rounded-full blur-2xl"
+          style={{ background: 'rgba(240,180,41,0.35)' }}
         />
-
-        {/* Cercles */}
-        <div className="absolute top-20 right-20 w-64 h-64 rounded-full" style={{ background: 'radial-gradient(circle, rgba(240,180,41,0.1) 0%, transparent 70%)' }} />
-        <div className="absolute bottom-20 left-20 w-48 h-48 rounded-full" style={{ background: 'radial-gradient(circle, rgba(240,180,41,0.07) 0%, transparent 70%)' }} />
-
-        <div className="relative z-10 text-center px-12">
-          {/* Logo */}
-          <div className="flex justify-center mb-8">
-            <img
-              src="/logo.png"
-              alt="Armoiries Madagascar"
-              className="w-36 h-36 object-contain drop-shadow-2xl"
-            />
-          </div>
-
-          <h1
-            className="text-4xl font-bold text-white mb-3"
-            style={{ fontFamily: 'Sora, sans-serif' }}
-          >
-            e-EtatCivil 2035
-          </h1>
-
-          <p className="text-lg font-semibold mb-1" style={{ color: '#f0b429' }}>
-            République de Madagascar
-          </p>
-          <p className="text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>
-            Registre civil numérique officiel
-          </p>
-
-          {/* Séparateur */}
-          <div className="flex items-center gap-3 my-10 px-4">
-            <div className="flex-1 h-px" style={{ background: 'rgba(240,180,41,0.2)' }} />
-            <div className="w-2 h-2 rounded-full" style={{ background: '#f0b429' }} />
-            <div className="flex-1 h-px" style={{ background: 'rgba(240,180,41,0.2)' }} />
-          </div>
-
-          {/* Features */}
-          <div className="flex flex-col gap-4 text-left">
-            {features.map(({ icon: Icon, text }, i) => (
-              <div key={i} className="flex items-center gap-3">
-                <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: 'rgba(240,180,41,0.12)', border: '1px solid rgba(240,180,41,0.2)' }}
-                >
-                  <Icon size={17} style={{ color: '#f0b429' }} />
-                </div>
-                <span className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>{text}</span>
-              </div>
-            ))}
-          </div>
+        <div
+          className="relative w-32 h-32 rounded-full flex items-center justify-center"
+          style={{
+            background:
+              'linear-gradient(145deg, rgba(240,180,41,0.15), rgba(240,180,41,0.03))',
+            border: '1px solid rgba(240,180,41,0.3)',
+            boxShadow:
+              '0 0 40px rgba(240,180,41,0.2), inset 0 0 20px rgba(240,180,41,0.05)',
+          }}
+        >
+          <img
+            src="/logo4.png"
+            alt="Logo secondaire"
+            className="w-24 h-24 object-contain drop-shadow-2xl"
+          />
         </div>
       </div>
-      {/* ══════════════════════════════════════════
-          PANNEAU DROIT — blanc
-      ══════════════════════════════════════════ */}
-      <div className="flex-1 flex items-center justify-center bg-white p-8 lg:max-w-xl relative overflow-hidden">
 
-        {/* Vague décorative haut gauche */}
+      <h1
+        className="text-5xl font-bold text-white tracking-tight"
+        style={{
+          fontFamily: 'Sora, sans-serif',
+          background:
+            'linear-gradient(180deg, #ffffff 0%, #e8c97a 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+        }}
+      >
+        EaSy
+      </h1>
+      <h4
+        className="text-sm font-medium tracking-[0.3em] uppercase mt-1"
+        style={{
+          fontFamily: 'Sora, sans-serif',
+          color: 'rgba(255,255,255,0.7)',
+        }}
+      >
+        e-EtatSivily
+      </h4>
+    </div>
+
+    {/* Mention République */}
+    <p
+      className="text-base font-semibold mb-1 tracking-wide"
+      style={{ color: '#f0b429' }}
+    >
+      {t('login.republique')}
+    </p>
+    <p
+      className="text-xs tracking-wider"
+      style={{ color: 'rgba(255,255,255,0.45)' }}
+    >
+      {t('login.registre')}
+    </p>
+
+    {/* Séparateur élégant */}
+    <div className="flex items-center gap-3 my-10 px-4">
+      <div
+        className="flex-1 h-px"
+        style={{
+          background:
+            'linear-gradient(to right, transparent, rgba(240,180,41,0.4))',
+        }}
+      />
+      <div
+        className="w-1.5 h-1.5 rounded-full"
+        style={{
+          background: '#f0b429',
+          boxShadow: '0 0 12px rgba(240,180,41,0.8)',
+        }}
+      />
+      <div
+        className="flex-1 h-px"
+        style={{
+          background:
+            'linear-gradient(to left, transparent, rgba(240,180,41,0.4))',
+        }}
+      />
+    </div>
+
+    {/* Liste des fonctionnalités */}
+    <div className="flex flex-col gap-3 text-left">
+      {features.map(({ icon: Icon, text }, i) => (
         <div
-          className="absolute -top-20 -left-20 w-64 h-64 rounded-full"
-          style={{ background: 'rgba(26,58,107,0.04)' }}
-        />
-        {/* Vague décorative bas droite */}
-        <div
-          className="absolute -bottom-16 -right-16 w-48 h-48 rounded-full"
-          style={{ background: 'rgba(240,180,41,0.06)' }}
-        />
+          key={i}
+          className="flex items-center gap-3 p-2.5 rounded-xl transition-all duration-300 hover:bg-white/[0.03] hover:translate-x-1 group"
+        >
+          <div
+            className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110"
+            style={{
+              background:
+                'linear-gradient(145deg, rgba(240,180,41,0.18), rgba(240,180,41,0.06))',
+              border: '1px solid rgba(240,180,41,0.25)',
+              boxShadow: '0 4px 12px rgba(240,180,41,0.08)',
+            }}
+          >
+            <Icon size={17} style={{ color: '#f0b429' }} />
+          </div>
+          <span
+            className="text-sm transition-colors group-hover:text-white"
+            style={{ color: 'rgba(255,255,255,0.7)' }}
+          >
+            {text}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  {/* Pied de page subtil */}
+  <div
+    className="absolute bottom-6 left-0 right-0 text-center text-[10px] tracking-[0.25em] uppercase"
+    style={{ color: 'rgba(255,255,255,0.3)' }}
+  >
+    © République · Sécurisé
+  </div>
+</div>
+
+      {/* ══ Panneau droit ══ */}
+      <div className="flex-1 flex items-center justify-center bg-white p-8 lg:max-w-xl relative overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-64 h-64 rounded-full" style={{ background:'rgba(26,58,107,0.04)' }} />
+        <div className="absolute -bottom-16 -right-16 w-48 h-48 rounded-full" style={{ background:'rgba(240,180,41,0.06)' }} />
 
         <div className="w-full max-w-sm relative z-10">
+
+          {/* Toggle langue */}
+          <div className="flex justify-end mb-4">
+            <button onClick={toggleLang}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs transition-all"
+              style={{
+                background : i18n.language === 'mg' ? 'rgba(240,180,41,0.15)' : 'rgba(26,58,107,0.08)',
+                color      : i18n.language === 'mg' ? '#b45309' : '#1a3a6b',
+                border     : `1px solid ${i18n.language === 'mg' ? 'rgba(240,180,41,0.3)' : 'rgba(26,58,107,0.15)'}`,
+                fontFamily : 'Sora,sans-serif',
+              }}>
+              {i18n.language === 'fr' ? '🇲🇬 MG' : '🇫🇷 FR'}
+            </button>
+          </div>
 
           {/* Logo mobile */}
           <div className="flex items-center gap-3 mb-10 lg:hidden">
             <img src="/logo.png" alt="Logo" className="w-10 h-10 object-contain" />
             <div>
-              <div className="font-bold text-base" style={{ color: '#1a3a6b', fontFamily: 'Sora, sans-serif' }}>
-                e-EtatCivil 2035
+              <div className="font-bold text-base" style={{ color:'#1a3a6b', fontFamily:'Sora,sans-serif' }}>
+                e-EtatSivily
               </div>
-              <div className="text-xs" style={{ color: '#f0b429' }}>République de Madagascar</div>
+              <div className="text-xs" style={{ color:'#f0b429' }}>{t('login.republique')}</div>
             </div>
           </div>
 
-          {/* Titre formulaire */}
+          {/* Titre */}
           <div className="mb-8">
-            {/* Bande or top */}
-            <div
-              className="h-1 w-12 rounded-full mb-5"
-              style={{ background: 'linear-gradient(90deg, #f0b429, #fcd34d)' }}
-            />
-            <h2
-              className="text-3xl font-bold mb-2"
-              style={{ color: '#1a3a6b', fontFamily: 'Sora, sans-serif' }}
-            >
-              Connexion
+            <div className="h-1 w-12 rounded-full mb-5" style={{ background:'linear-gradient(90deg,#f0b429,#fcd34d)' }} />
+            <h2 className="text-3xl font-bold mb-2" style={{ color:'#1a3a6b', fontFamily:'Sora,sans-serif' }}>
+              {t('auth.connexion')}
             </h2>
-            <p className="text-sm" style={{ color: '#94a3b8' }}>
-              Accédez à votre espace personnel
-            </p>
+            <p className="text-sm" style={{ color:'#94a3b8' }}>{t('login.sous_titre')}</p>
           </div>
 
           {/* Erreur */}
           {error && (
-            <div
-              className="flex items-center gap-3 mb-6 p-4 rounded-2xl border"
-              style={{
-                background: 'rgba(239,68,68,0.05)',
-                borderColor: 'rgba(239,68,68,0.2)',
-              }}
-            >
-              <Shield size={16} style={{ color: '#ef4444', flexShrink: 0 }} />
-              <span className="text-sm" style={{ color: '#ef4444' }}>{error}</span>
+            <div className="flex items-center gap-3 mb-6 p-4 rounded-2xl border"
+              style={{ background:'rgba(239,68,68,0.05)', borderColor:'rgba(239,68,68,0.2)' }}>
+              <Shield size={16} style={{ color:'#ef4444', flexShrink:0 }} />
+              <span className="text-sm" style={{ color:'#ef4444' }}>{error}</span>
             </div>
           )}
 
@@ -171,125 +283,65 @@ export default function Login() {
             {/* Email */}
             <div className="form-control gap-2">
               <label className="label py-0">
-                <span
-                  className="label-text text-sm font-semibold"
-                  style={{ color: '#1a3a6b' }}
-                >
-                  Adresse email
+                <span className="label-text text-sm font-semibold" style={{ color:'#1a3a6b' }}>
+                  {t('auth.email')}
                 </span>
               </label>
-              <label
-                className="input flex items-center gap-3 border-2 bg-gray-50 rounded-2xl transition-all focus-within:bg-white"
-                style={{ borderColor: '#e2e8f0' }}
-                onFocus={() => {}}
-              >
-                <Mail size={17} style={{ color: '#94a3b8', flexShrink: 0 }} />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  placeholder="votre@email.mg"
-                  required
-                  className="grow bg-transparent outline-none text-sm"
-                  style={{ color: '#1a3a6b' }}
-                />
+              <label className="input flex items-center gap-3 border-2 bg-gray-50 rounded-2xl transition-all focus-within:bg-white"
+                style={{ borderColor:'#e2e8f0' }}>
+                <Mail size={17} style={{ color:'#94a3b8', flexShrink:0 }} />
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)}
+                  placeholder="votre@email.mg" required
+                  className="grow bg-transparent outline-none text-sm" style={{ color:'#1a3a6b' }} />
               </label>
             </div>
 
             {/* Mot de passe */}
             <div className="form-control gap-2">
               <label className="label py-0">
-                <span
-                  className="label-text text-sm font-semibold"
-                  style={{ color: '#1a3a6b' }}
-                >
-                  Mot de passe
+                <span className="label-text text-sm font-semibold" style={{ color:'#1a3a6b' }}>
+                  {t('auth.mot_de_passe')}
                 </span>
               </label>
-              <label
-                className="input flex items-center gap-3 border-2 bg-gray-50 rounded-2xl"
-                style={{ borderColor: '#e2e8f0' }}
-              >
-                <Lock size={17} style={{ color: '#94a3b8', flexShrink: 0 }} />
-                <input
-                  type={showMdp ? 'text' : 'password'}
-                  value={mdp}
-                  onChange={e => setMdp(e.target.value)}
-                  placeholder="••••••••"
-                  required
-                  className="grow bg-transparent outline-none text-sm"
-                  style={{ color: '#1a3a6b' }}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowMdp(!showMdp)}
-                  className="btn btn-ghost btn-xs p-1"
-                  style={{ color: '#94a3b8' }}
-                >
-                  {showMdp ? <EyeOff size={16} /> : <Eye size={16} />}
+              <label className="input flex items-center gap-3 border-2 bg-gray-50 rounded-2xl"
+                style={{ borderColor:'#e2e8f0' }}>
+                <Lock size={17} style={{ color:'#94a3b8', flexShrink:0 }} />
+                <input type={showMdp ? 'text' : 'password'} value={mdp} onChange={e => setMdp(e.target.value)}
+                  placeholder="••••••••" required
+                  className="grow bg-transparent outline-none text-sm" style={{ color:'#1a3a6b' }} />
+                <button type="button" onClick={() => setShowMdp(!showMdp)}
+                  className="btn btn-ghost btn-xs p-1" style={{ color:'#94a3b8' }}>
+                  {showMdp ? <EyeOff size={16}/> : <Eye size={16}/>}
                 </button>
               </label>
-
               <div className="text-right mt-1">
-                <Link
-                  to="/mot-de-passe-oublie"
-                  className="text-xs font-semibold hover:underline"
-                  style={{ color: '#f0b429' }}
-                >
-                  Mot de passe oublié ?
+                <Link to="/mot-de-passe-oublie" className="text-xs font-semibold hover:underline" style={{ color:'#f0b429' }}>
+                  {t('auth.mdp_oublie')}
                 </Link>
               </div>
             </div>
 
-            {/* Bouton */}
-            <button
-              type="submit"
-              disabled={loading}
+            {/* Bouton connexion */}
+            <button type="submit" disabled={loading}
               className="btn w-full mt-3 border-0 text-base font-bold gap-2 rounded-2xl"
-              style={{
-                background: 'linear-gradient(135deg, #1a3a6b, #2456a0)',
-                color: '#fff',
-                height: 52,
-                fontFamily: 'Sora, sans-serif',
-                boxShadow: '0 4px 24px rgba(26,58,107,0.35)',
-              }}
-            >
-              {loading ? (
-                <span className="loading loading-spinner loading-sm" />
-              ) : (
-                <>
-                  <LogIn size={19} />
-                  Se connecter
-                </>
-              )}
+              style={{ background:'linear-gradient(135deg,#1a3a6b,#2456a0)', color:'#fff', height:52, fontFamily:'Sora,sans-serif', boxShadow:'0 4px 24px rgba(26,58,107,0.35)' }}>
+              {loading
+                ? <span className="loading loading-spinner loading-sm" />
+                : <><LogIn size={19}/>{t('auth.se_connecter')}</>
+              }
             </button>
 
-            {/* Bouton or secondaire */}
-            <div
-              className="h-px w-full"
-              style={{ background: 'linear-gradient(90deg, transparent, #e2e8f0, transparent)' }}
-            />
+            <div className="h-px w-full" style={{ background:'linear-gradient(90deg,transparent,#e2e8f0,transparent)' }} />
 
-            <Link
-              to="/register"
+            <Link to="/register"
               className="btn w-full border-2 bg-transparent font-semibold gap-2 rounded-2xl"
-              style={{
-                borderColor: '#f0b429',
-                color: '#f0b429',
-                height: 48,
-                fontFamily: 'Sora, sans-serif',
-              }}
-            >
-              Créer un compte citoyen
+              style={{ borderColor:'#f0b429', color:'#f0b429', height:48, fontFamily:'Sora,sans-serif' }}>
+              {t('auth.inscription')}
             </Link>
           </form>
 
-          {/* Footer */}
-          <p
-            className="text-center mt-8 text-xs"
-            style={{ color: '#cbd5e1' }}
-          >
-            Connexion chiffrée · v2.0 · © 2035
+          <p className="text-center mt-8 text-xs" style={{ color:'#cbd5e1' }}>
+            {t('login.footer')}
           </p>
         </div>
       </div>
