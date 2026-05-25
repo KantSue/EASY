@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Mail, Lock, Eye, EyeOff, LogIn, Shield, FileText, Zap, LucideHeading3 } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, LogIn, Shield, FileText, Zap } from 'lucide-react';
 import { authService } from '../service/authService';
 
 export default function Login() {
@@ -37,193 +37,115 @@ export default function Login() {
   };
 
   const features = [
-    { icon: Shield,   text: t('login.feature1') },
     { icon: FileText, text: t('login.feature2') },
     { icon: Zap,      text: t('login.feature3') },
   ];
 
   return (
     <div className="min-h-screen flex">
-{/* ══ Panneau gauche ══ */}
+
+     {/* ══ Panneau gauche ══ */}
 <div
   className="hidden lg:flex flex-col items-center justify-center flex-1 relative overflow-hidden"
-  style={{
-    background:
-      'radial-gradient(ellipse at top, #1e457f 0%, #0d2348 50%, #081832 100%)',
-  }}
+  style={{ minHeight:'100vh' }}
 >
-  {/* Texture pointillée */}
-  <div
-    className="absolute inset-0 opacity-60"
-    style={{
-      backgroundImage:
-        'radial-gradient(circle at 1px 1px, rgba(240,180,41,0.10) 1px, transparent 0)',
-      backgroundSize: '38px 38px',
-    }}
-  />
-
-  {/* Halos dorés animés */}
-  <div
-    className="absolute -top-32 -right-32 w-[28rem] h-[28rem] rounded-full blur-3xl animate-pulse"
-    style={{
-      background:
-        'radial-gradient(circle, rgba(240,180,41,0.18) 0%, transparent 70%)',
-      animationDuration: '6s',
-    }}
-  />
-  <div
-    className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full blur-3xl animate-pulse"
-    style={{
-      background:
-        'radial-gradient(circle, rgba(240,180,41,0.12) 0%, transparent 70%)',
-      animationDuration: '8s',
-    }}
-  />
-
-
-  {/* Logo en haut à gauche */}
+  {/* ── Image de fond ── */}
   <img
-    src="/logo.png"
-    alt="Logo"
-    className="absolute top-6 left-6 w-24 h-24 object-contain drop-shadow-2xl z-20 transition-transform hover:scale-105"
+    src="/logo1.png"
+    alt=""
+    className="absolute inset-0 w-full h-full object-cover"
+    style={{  transform:'scale(1.05)' }}
   />
 
-  {/* Badge officiel en haut à droite */}
+  {/* ── Overlay bleu transparent ── */}
   <div
-    className="absolute top-8 right-8 z-20 px-3 py-1.5 rounded-full text-[10px] font-semibold tracking-widest uppercase backdrop-blur-md"
-    style={{
-      background: 'rgba(240,180,41,0.08)',
-      border: '1px solid rgba(240,180,41,0.25)',
-      color: '#f0b429',
-    }}
-  >
-    ● Officiel
-  </div>
+    className="absolute inset-0"
+    style={{ background:'linear-gradient(190deg,rgba(26,58,107,0.88) 0%,rgba(13,35,72,0.92) 100%)' }}
+  />
 
-  {/* Contenu principal */}
-  <div className="relative z-10 text-center px-12 max-w-md">
-    {/* Logo central avec anneau doré */}
+  {/* ── Grille décorative ── */}
+  <div
+    className="absolute inset-0"
+    style={{ backgroundImage:'radial-gradient(circle at 1px 1px,rgba(240,180,41,0.08) 1px,transparent 0)', backgroundSize:'40px 40px' }}
+  />
+
+  {/* ── Cercles lumineux ── */}
+  <div className="absolute top-20 right-20 w-64 h-64 rounded-full"
+    style={{ background:'radial-gradient(circle,rgba(240,180,41,0.1) 0%,transparent 70%)' }} />
+  <div className="absolute bottom-20 left-20 w-48 h-48 rounded-full"
+    style={{ background:'radial-gradient(circle,rgba(240,180,41,0.07) 0%,transparent 70%)' }} />
+
+  {/* ── Contenu centré ── */}
+  <div className="relative z-10 flex flex-col items-center text-center px-12 w-full">
+
+    {/* Logo avec anneau doré */}
     <div className="flex flex-col items-center mb-8">
       <div className="relative mb-5">
         <div
           className="absolute inset-0 rounded-full blur-2xl"
-          style={{ background: 'rgba(240,180,41,0.35)' }}
+          style={{ background:'rgba(240,180,41,0.35)' }}
         />
         <div
           className="relative w-32 h-32 rounded-full flex items-center justify-center"
           style={{
-            background:
-              'linear-gradient(145deg, rgba(240,180,41,0.15), rgba(240,180,41,0.03))',
-            border: '1px solid rgba(240,180,41,0.3)',
-            boxShadow:
-              '0 0 40px rgba(240,180,41,0.2), inset 0 0 20px rgba(240,180,41,0.05)',
+            background : 'linear-gradient(145deg,rgba(240,180,41,0.15),rgba(240,180,41,0.03))',
+            border     : '1px solid rgba(240,180,41,0.3)',
+            boxShadow  : '0 0 40px rgba(240,180,41,0.2), inset 0 0 20px rgba(240,180,41,0.05)',
           }}
         >
           <img
             src="/logo4.png"
-            alt="Logo secondaire"
+            alt="Armoiries Madagascar"
             className="w-24 h-24 object-contain drop-shadow-2xl"
           />
         </div>
       </div>
-
-      <h1
-        className="text-5xl font-bold text-white tracking-tight"
-        style={{
-          fontFamily: 'Sora, sans-serif',
-          background:
-            'linear-gradient(180deg, #ffffff 0%, #e8c97a 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-        }}
-      >
-        EaSy
-      </h1>
-      <h4
-        className="text-sm font-medium tracking-[0.3em] uppercase mt-1"
-        style={{
-          fontFamily: 'Sora, sans-serif',
-          color: 'rgba(255,255,255,0.7)',
-        }}
-      >
-        e-EtatSivily
-      </h4>
     </div>
 
-    {/* Mention République */}
-    <p
-      className="text-base font-semibold mb-1 tracking-wide"
-      style={{ color: '#f0b429' }}
+    {/* Titre */}
+    <h1
+      className="text-5xl font-bold tracking-tight mb-2"
+      style={{
+        fontFamily           : 'Sora,sans-serif',
+        background           : 'linear-gradient(180deg,#ffffff 0%,#e8c97a 100%)',
+        WebkitBackgroundClip : 'text',
+        WebkitTextFillColor  : 'transparent',
+      }}
     >
+      EaSy
+    </h1>
+    <p className="text-lg font-semibold mb-1" style={{ color:'#f0b429' }}>
       {t('login.republique')}
     </p>
-    <p
-      className="text-xs tracking-wider"
-      style={{ color: 'rgba(255,255,255,0.45)' }}
-    >
+    <p className="text-sm" style={{ color:'rgba(255,255,255,0.4)' }}>
       {t('login.registre')}
     </p>
 
-    {/* Séparateur élégant */}
-    <div className="flex items-center gap-3 my-10 px-4">
-      <div
-        className="flex-1 h-px"
-        style={{
-          background:
-            'linear-gradient(to right, transparent, rgba(240,180,41,0.4))',
-        }}
-      />
-      <div
-        className="w-1.5 h-1.5 rounded-full"
-        style={{
-          background: '#f0b429',
-          boxShadow: '0 0 12px rgba(240,180,41,0.8)',
-        }}
-      />
-      <div
-        className="flex-1 h-px"
-        style={{
-          background:
-            'linear-gradient(to left, transparent, rgba(240,180,41,0.4))',
-        }}
-      />
+    {/* Séparateur */}
+    <div className="flex items-center gap-3 my-10 px-4 w-full">
+      <div className="flex-1 h-px" style={{ background:'rgba(240,180,41,0.2)' }} />
+      <div className="w-2 h-2 rounded-full" style={{ background:'#f0b429' }} />
+      <div className="flex-1 h-px" style={{ background:'rgba(240,180,41,0.2)' }} />
     </div>
 
-    {/* Liste des fonctionnalités */}
-    <div className="flex flex-col gap-3 text-left">
-      {features.map(({ icon: Icon, text }, i) => (
-        <div
-          key={i}
-          className="flex items-center gap-3 p-2.5 rounded-xl transition-all duration-300 hover:bg-white/[0.03] hover:translate-x-1 group"
-        >
-          <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110"
-            style={{
-              background:
-                'linear-gradient(145deg, rgba(240,180,41,0.18), rgba(240,180,41,0.06))',
-              border: '1px solid rgba(240,180,41,0.25)',
-              boxShadow: '0 4px 12px rgba(240,180,41,0.08)',
-            }}
-          >
-            <Icon size={17} style={{ color: '#f0b429' }} />
+    {/* Features + logo armoiries */}
+    <div className="flex flex-row items-center gap-12 w-full justify-center">
+      <div className="flex flex-col gap-4 text-left">
+        {features.map(({ icon: Icon, text }, i) => (
+          <div key={i} className="flex items-center gap-3">
+            <div
+              className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ background:'rgba(240,180,41,0.12)', border:'1px solid rgba(240,180,41,0.2)' }}
+            >
+              <Icon size={17} style={{ color:'#f0b429' }} />
+            </div>
+            <span className="text-sm" style={{ color:'rgba(255,255,255,0.6)' }}>{text}</span>
           </div>
-          <span
-            className="text-sm transition-colors group-hover:text-white"
-            style={{ color: 'rgba(255,255,255,0.7)' }}
-          >
-            {text}
-          </span>
-        </div>
-      ))}
-    </div>
-  </div>
+        ))}
+      </div>
 
-  {/* Pied de page subtil */}
-  <div
-    className="absolute bottom-6 left-0 right-0 text-center text-[10px] tracking-[0.25em] uppercase"
-    style={{ color: 'rgba(255,255,255,0.3)' }}
-  >
-    © République · Sécurisé
+      
+    </div>
   </div>
 </div>
 

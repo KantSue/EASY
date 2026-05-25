@@ -26,7 +26,7 @@ export default function Topbar({ titre, nom, role }: Props) {
       {/* ── Titre ── */}
       <div>
         <img
-            src="/logo.png"
+            src="/back.png"
             alt="Logo secondaire"
             className="w-10 h-10 object-contain drop-shadow-2xl"
           />

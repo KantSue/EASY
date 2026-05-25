@@ -106,172 +106,187 @@ export default function DetailActe() {
 
   return (
     <SharedLayout>
-      <div style={{ maxWidth:820 }}>
+      <div className="flex justify-center w-full">
+        <div className="w-full" style={{ maxWidth:800 }}>
 
-        {/* ══ Header ══ */}
-        <div className="flex items-start justify-between mb-6">
-          <div className="flex items-center gap-4">
-            <button onClick={() => navigate('/archives')} className="btn btn-ghost btn-sm gap-2" style={{ color:'#64748b' }}>
-              <ArrowLeft size={16} />
-              {t('nav.archives')}
-            </button>
-            <div>
-              <h1 className="text-2xl font-bold" style={{ color:'#1a3a6b', fontFamily:'Sora,sans-serif' }}>
-                {acte.num_acte}
-              </h1>
-              <p className="text-sm mt-0.5" style={{ color:'#94a3b8' }}>{t('detail_acte.detail_acte')}</p>
+          {/* ══ Header ══ */}
+          <div className="flex items-start justify-between mb-6">
+            <div className="flex items-center gap-6">
+              <button onClick={() => navigate('/archives')} className="btn btn-ghost btn-sm gap-2" style={{ color:'#64748b' }}>
+                <ArrowLeft size={16} />
+                {t('nav.archives')}
+              </button>
+              <div>
+                <h1 className="text-2xl font-bold" style={{ color:'#1a3a6b', fontFamily:'Sora,sans-serif' }}>
+                  {acte.num_acte}
+                </h1>
+                <p className="text-sm mt-0.5" style={{ color:'#94a3b8' }}>{t('detail_acte.detail_acte')}</p>
+              </div>
             </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="badge font-semibold px-3 py-3 gap-2"
-              style={{ background:typeCfg.bg, color:typeCfg.color, border:'none', borderRadius:10 }}>
-              {TYPE_ICON[acte.type_acte]}{acte.type_acte}
-            </span>
-            {statutCfg && (
+            <div className="flex items-center gap-2">
               <span className="badge font-semibold px-3 py-3 gap-2"
-                style={{ background:statutCfg.bg, color:statutCfg.color, border:'none', borderRadius:10 }}>
-                {statutCfg.icon}{statutCfg.label}
+                style={{ background:typeCfg.bg, color:typeCfg.color, border:'none', borderRadius:10 }}>
+                {TYPE_ICON[acte.type_acte]}{acte.type_acte}
               </span>
-            )}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-
-          {/* ══ Col gauche ══ */}
-          <div className="flex flex-col gap-5">
-
-            {/* Infos acte */}
-            <div className="bg-white p-6" style={{ boxShadow:'0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)', border:'1px solid #f1f5f9' }}>
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4" style={{ background:typeCfg.bg }}>
-                {TYPE_ICON[acte.type_acte] ?? <FileText size={24} style={{ color:'#1a3a6b' }} />}
-              </div>
-              <h3 className="font-bold text-base mb-4" style={{ color:'#1a3a6b', fontFamily:'Sora,sans-serif' }}>
-                {t('detail_acte.infos_acte')}
-              </h3>
-              <div className="flex flex-col gap-0">
-                {([
-                  { icon:<FileText size={15} style={{ color:'#94a3b8' }}/>, label:t('detail_acte.numero'),  value:acte.num_acte,  bold:true },
-                  { icon:<Calendar size={15} style={{ color:'#94a3b8' }}/>, label:t('detail_acte.date'),    value:new Date(acte.date_acte).toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' }) },
-                  { icon:<FileText size={15} style={{ color:'#94a3b8' }}/>, label:t('detail.type_acte'),    value:acte.type_acte },
-                ] as { icon:React.ReactNode; label:string; value:string; bold?:boolean }[]).map((row, i) => (
-                  <div key={i} className="flex items-start gap-3 py-3" style={{ borderBottom:'1px solid #f8fafc' }}>
-                    <div className="mt-0.5 flex-shrink-0">{row.icon}</div>
-                    <div className="flex flex-col gap-0.5 flex-1">
-                      <span className="text-xs" style={{ color:'#94a3b8' }}>{row.label}</span>
-                      <span className="text-sm" style={{ color:row.bold ? '#f0b429' : '#334155', fontWeight:row.bold ? 700 : 500 }}>
-                        {row.value}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              {statutCfg && (
+                <span className="badge font-semibold px-3 py-3 gap-2"
+                  style={{ background:statutCfg.bg, color:statutCfg.color, border:'none', borderRadius:10 }}>
+                  {statutCfg.icon}{statutCfg.label}
+                </span>
+              )}
             </div>
+          </div>
 
-            {/* Demande liée */}
-            {acte.id_demande && (
-              <div className="bg-white rounded-2xl p-6" style={{ boxShadow:'0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)', border:'1px solid #f1f5f9' }}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+
+            {/* ══ Col gauche ══ */}
+            <div className="flex flex-col gap-5">
+
+              {/* Infos acte */}
+              <div className="bg-white p-6"
+                style={{ boxShadow:'0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)', border:'1px solid #f1f5f9' }}>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"
+                  style={{ background:typeCfg.bg }}>
+                  {TYPE_ICON[acte.type_acte] ?? <FileText size={24} style={{ color:'#1a3a6b' }} />}
+                </div>
                 <h3 className="font-bold text-base mb-4" style={{ color:'#1a3a6b', fontFamily:'Sora,sans-serif' }}>
-                  {t('detail_acte.demande_liee')}
+                  {t('detail_acte.infos_acte')}
                 </h3>
                 <div className="flex flex-col gap-0">
                   {([
-                    { icon:<FileText size={15} style={{ color:'#94a3b8' }}/>, label:t('detail_acte.num_demande'), value:`#${acte.id_demande}` },
-                    ...(acte.email_citoyen ? [{ icon:<Mail size={15} style={{ color:'#94a3b8' }}/>, label:'Email citoyen', value:acte.email_citoyen }] : []),
-                    ...(acte.paiement_ok !== undefined ? [{
-                      icon :<CheckCircle size={15} style={{ color:acte.paiement_ok ? '#10b981' : '#94a3b8' }}/>,
-                      label: t('detail_acte.paiement'),
-                      value: acte.paiement_ok ? t('detail_acte.confirme') : t('detail_acte.en_attente'),
-                      color: acte.paiement_ok ? '#047857' : '#94a3b8',
-                    }] : []),
-                  ] as { icon:React.ReactNode; label:string; value:string; color?:string }[]).map((row, i) => (
+                    { icon:<FileText size={15} style={{ color:'#94a3b8' }}/>, label:t('detail_acte.numero'), value:acte.num_acte, bold:true },
+                    { icon:<Calendar size={15} style={{ color:'#94a3b8' }}/>, label:t('detail_acte.date'),   value:new Date(acte.date_acte).toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' }) },
+                    { icon:<FileText size={15} style={{ color:'#94a3b8' }}/>, label:t('detail.type_acte'),   value:acte.type_acte },
+                  ] as { icon:React.ReactNode; label:string; value:string; bold?:boolean }[]).map((row, i) => (
                     <div key={i} className="flex items-start gap-3 py-3" style={{ borderBottom:'1px solid #f8fafc' }}>
                       <div className="mt-0.5 flex-shrink-0">{row.icon}</div>
                       <div className="flex flex-col gap-0.5 flex-1">
                         <span className="text-xs" style={{ color:'#94a3b8' }}>{row.label}</span>
-                        <span className="text-sm font-medium" style={{ color:row.color ?? '#334155' }}>{row.value}</span>
+                        <span className="text-sm"
+                          style={{ color:row.bold ? '#f0b429' : '#334155', fontWeight:row.bold ? 700 : 500 }}>
+                          {row.value}
+                        </span>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-            )}
-          </div>
 
-          {/* ══ Col droite — Personnes ══ */}
-          <div className="lg:col-span-2">
-            <div className="bg-white p-6" style={{ boxShadow:'0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)', border:'1px solid #f1f5f9' }}>
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background:'rgba(26,58,107,0.1)' }}>
-                  <User size={18} style={{ color:'#1a3a6b' }} />
-                </div>
-                <div>
-                  <h3 className="font-bold text-base" style={{ color:'#1a3a6b', fontFamily:'Sora,sans-serif' }}>
-                    {t('personne.personnes_conc')}
+              {/* Demande liée */}
+              {acte.id_demande && (
+                <div className="bg-white rounded-2xl p-6"
+                  style={{ boxShadow:'0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)', border:'1px solid #f1f5f9' }}>
+                  <h3 className="font-bold text-base mb-4" style={{ color:'#1a3a6b', fontFamily:'Sora,sans-serif' }}>
+                    {t('detail_acte.demande_liee')}
                   </h3>
-                  <p className="text-xs" style={{ color:'#94a3b8' }}>
-                    {acte.personnes?.length ?? 0} {t('detail_acte.personnes_enregistrees')}
-                  </p>
-                </div>
-              </div>
-
-              {acte.personnes?.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-10 gap-3">
-                  <User size={36} style={{ color:'#e2e8f0' }} />
-                  <p className="text-sm" style={{ color:'#94a3b8' }}>{t('detail.aucune_personne')}</p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {acte.personnes?.map((p: PersonneActe, i: number) => {
-                    const roleCfg = ROLE_COLOR[p.role] ?? { bg:'rgba(26,58,107,0.08)', color:'#1a3a6b' };
-                    return (
-                      <div key={i} className="rounded-2xl p-4 flex flex-col gap-3"
-                        style={{ background:'#f8fafc', border:'1px solid #f1f5f9' }}>
-                        <div className="flex items-center justify-between">
-                          <span className="badge badge-sm font-semibold px-3 py-2"
-                            style={{ background:roleCfg.bg, color:roleCfg.color, border:'none', borderRadius:8 }}>
-                            {ROLE_LABEL[p.role] || p.role}
+                  <div className="flex flex-col gap-0">
+                    {([
+                      { icon:<FileText size={15} style={{ color:'#94a3b8' }}/>, label:t('detail_acte.num_demande'), value:`#${acte.id_demande}` },
+                      ...(acte.email_citoyen ? [{
+                        icon :<Mail size={15} style={{ color:'#94a3b8' }}/>,
+                        label: 'Email citoyen',
+                        value: acte.email_citoyen,
+                      }] : []),
+                      ...(acte.paiement_ok !== undefined ? [{
+                        icon :<CheckCircle size={15} style={{ color:acte.paiement_ok ? '#10b981' : '#94a3b8' }}/>,
+                        label: t('detail_acte.paiement'),
+                        value: acte.paiement_ok ? t('detail_acte.confirme') : t('detail_acte.en_attente'),
+                        color: acte.paiement_ok ? '#047857' : '#94a3b8',
+                      }] : []),
+                    ] as { icon:React.ReactNode; label:string; value:string; color?:string }[]).map((row, i) => (
+                      <div key={i} className="flex items-start gap-3 py-3" style={{ borderBottom:'1px solid #f8fafc' }}>
+                        <div className="mt-0.5 flex-shrink-0">{row.icon}</div>
+                        <div className="flex flex-col gap-0.5 flex-1">
+                          <span className="text-xs" style={{ color:'#94a3b8' }}>{row.label}</span>
+                          <span className="text-sm font-medium" style={{ color:row.color ?? '#334155' }}>
+                            {row.value}
                           </span>
-                          <span className="text-xs" style={{ color:'#94a3b8' }}>
-                            {p.sexe === 'M' ? t('personne.masculin') : t('personne.feminin')}
-                          </span>
-                        </div>
-                        <div>
-                          <div className="font-bold text-base" style={{ color:'#1a3a6b', fontFamily:'Sora,sans-serif' }}>
-                            {p.prenom_personne} {p.nom_personne}
-                          </div>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          {p.date_naissance && (
-                            <div className="flex items-center gap-2">
-                              <Calendar size={13} style={{ color:'#94a3b8', flexShrink:0 }} />
-                              <span className="text-xs" style={{ color:'#64748b' }}>
-                                {t('detail.ne_le')} {p.date_naissance.split(' ')[0]}
-                              </span>
-                            </div>
-                          )}
-                          {p.lieu_naiss && (
-                            <div className="flex items-center gap-2">
-                              <MapPin size={13} style={{ color:'#94a3b8', flexShrink:0 }} />
-                              <span className="text-xs" style={{ color:'#64748b' }}>{p.lieu_naiss}</span>
-                            </div>
-                          )}
-                          {p.profession && (
-                            <div className="flex items-center gap-2">
-                              <Briefcase size={13} style={{ color:'#94a3b8', flexShrink:0 }} />
-                              <span className="text-xs" style={{ color:'#64748b' }}>{p.profession}</span>
-                            </div>
-                          )}
                         </div>
                       </div>
-                    );
-                  })}
+                    ))}
+                  </div>
                 </div>
               )}
+            </div>
+
+            {/* ══ Col droite — Personnes ══ */}
+            <div className="lg:col-span-2">
+              <div className="bg-white p-6"
+                style={{ boxShadow:'0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)', border:'1px solid #f1f5f9' }}>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{ background:'rgba(26,58,107,0.1)' }}>
+                    <User size={18} style={{ color:'#1a3a6b' }} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-base" style={{ color:'#1a3a6b', fontFamily:'Sora,sans-serif' }}>
+                      {t('personne.personnes_conc')}
+                    </h3>
+                    <p className="text-xs" style={{ color:'#94a3b8' }}>
+                      {acte.personnes?.length ?? 0} {t('detail_acte.personnes_enregistrees')}
+                    </p>
+                  </div>
+                </div>
+
+                {acte.personnes?.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center py-10 gap-3">
+                    <User size={36} style={{ color:'#e2e8f0' }} />
+                    <p className="text-sm" style={{ color:'#94a3b8' }}>{t('detail.aucune_personne')}</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {acte.personnes?.map((p: PersonneActe, i: number) => {
+                      const roleCfg = ROLE_COLOR[p.role] ?? { bg:'rgba(26,58,107,0.08)', color:'#1a3a6b' };
+                      return (
+                        <div key={i} className="rounded-2xl p-4 flex flex-col gap-3"
+                          style={{ background:'#f8fafc', border:'1px solid #f1f5f9' }}>
+                          <div className="flex items-center justify-between">
+                            <span className="badge badge-sm font-semibold px-3 py-2"
+                              style={{ background:roleCfg.bg, color:roleCfg.color, border:'none', borderRadius:8 }}>
+                              {ROLE_LABEL[p.role] || p.role}
+                            </span>
+                            <span className="text-xs" style={{ color:'#94a3b8' }}>
+                              {p.sexe === 'M' ? t('personne.masculin') : t('personne.feminin')}
+                            </span>
+                          </div>
+                          <div>
+                            <div className="font-bold text-base" style={{ color:'#1a3a6b', fontFamily:'Sora,sans-serif' }}>
+                              {p.prenom_personne} {p.nom_personne}
+                            </div>
+                          </div>
+                          <div className="flex flex-col gap-2">
+                            {p.date_naissance && (
+                              <div className="flex items-center gap-2">
+                                <Calendar size={13} style={{ color:'#94a3b8', flexShrink:0 }} />
+                                <span className="text-xs" style={{ color:'#64748b' }}>
+                                  {t('detail.ne_le')} {p.date_naissance.split(' ')[0]}
+                                </span>
+                              </div>
+                            )}
+                            {p.lieu_naiss && (
+                              <div className="flex items-center gap-2">
+                                <MapPin size={13} style={{ color:'#94a3b8', flexShrink:0 }} />
+                                <span className="text-xs" style={{ color:'#64748b' }}>{p.lieu_naiss}</span>
+                              </div>
+                            )}
+                            {p.profession && (
+                              <div className="flex items-center gap-2">
+                                <Briefcase size={13} style={{ color:'#94a3b8', flexShrink:0 }} />
+                                <span className="text-xs" style={{ color:'#64748b' }}>{p.profession}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
     </SharedLayout>
+  
   );
 }

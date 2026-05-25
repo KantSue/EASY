@@ -15,6 +15,7 @@ import CitoyenAccueil       from './pages/citoyens/Accueil';
 import CitoyenDemande       from './pages/citoyens/Demande';
 import CitoyenSuivi         from './pages/citoyens/Suivi';
 import CitoyenArrondissements from './pages/citoyens/Arrondissement';
+import Register from './pages/register';
 
 // Dans Routes :
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/"                    element={<Navigate to="/login" />} />
         <Route path="/login"               element={<Login />} />
+        <Route path="/register"             element={<Register />} />
         <Route path="/agent/file-attente"  element={<FileAttente />} />
         <Route path="/agent/detail"        element={<Detail />} />
         <Route path="/profil"              element={<Profil />} />
