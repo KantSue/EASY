@@ -157,7 +157,7 @@ export default function AccueilScreen() {
 
 const S = StyleSheet.create({
   root         : { flex: 1, backgroundColor: '#F4F6F9' },
-  header       : { backgroundColor: '#0F2942', paddingHorizontal: 20, paddingTop: 56, paddingBottom: 36, borderBottomLeftRadius: 32, borderBottomRightRadius: 32 },
+  header       : { backgroundColor: '#0F2942', paddingHorizontal: 20, paddingTop: 46, paddingBottom: 36, borderBottomLeftRadius: 32, borderBottomRightRadius: 32 },
   headerTop    : { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   avatarRow    : { flexDirection: 'row', alignItems: 'center', gap: 12 },
   avatar       : { width: 48, height: 48, borderRadius: 16, backgroundColor: '#D4AF37', justifyContent: 'center', alignItems: 'center' },
@@ -171,7 +171,7 @@ const S = StyleSheet.create({
   locationRow  : { flexDirection: 'row', alignItems: 'center', marginTop: 10 },
   locationText : { color: 'rgba(255,255,255,0.55)', fontSize: 11 },
   scroll       : { flex: 1 },
-  featuredWrap : { paddingHorizontal: 16, marginTop: -18 },
+  featuredWrap : { paddingHorizontal: 16, marginTop: 18 },
   featured     : { backgroundColor: '#FFFFFF', borderRadius: 24, padding: 18, flexDirection: 'row', alignItems: 'center', gap: 14, shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 16, elevation: 6 },
   featuredIcon : { width: 56, height: 56, borderRadius: 18, backgroundColor: '#0F2942', justifyContent: 'center', alignItems: 'center' },
   featuredBadge: { fontSize: 9, fontWeight: '800', color: '#D4AF37', letterSpacing: 1.2 },

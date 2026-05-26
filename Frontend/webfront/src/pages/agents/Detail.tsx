@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/pages/agents/Detail.tsx
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -257,7 +258,7 @@ export default function Detail() {
               <div className="flex flex-col">
                 {([
                   { label: t('detail.nom_complet'),  value: demande.citoyen },
-                  { label: 'Email',                  value: demande.email_citoyen },
+                  // { label: 'Email',                  value: demande.email_citoyen },
                   { label: t('detail.type_acte'),    value: demande.type_acte },
                   { label: t('demande.arrondissement'), value: demande.arrondissement },
                   { label: t('demande.commune'),     value: demande.commune },

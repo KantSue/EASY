@@ -1,5 +1,4 @@
 // src/components/Topbar.tsx
-import { Bell } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface Props { titre: string; nom: string; role: string; }
@@ -65,7 +64,7 @@ export default function Topbar({ titre, nom, role }: Props) {
         {/* Avatar */}
         <div className="flex items-center gap-2">
           <div
-            className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+            className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
             style={{
               background : 'linear-gradient(135deg,#1a3a6b,#2456a0)',
               color      : '#fff',
