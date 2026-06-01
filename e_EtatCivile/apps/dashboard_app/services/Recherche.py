@@ -12,7 +12,6 @@ def rechercher_actes(query):
     mots      = query.split()
     resultats = {}
 
-    # Une seule boucle — toutes les personnes via acte_personne
     acte_personnes = ActePersonne.objects.select_related('id_personne', 'id_acte')
 
     def scorer(acte_id, champs):
@@ -34,7 +33,7 @@ def rechercher_actes(query):
             ap.id_personne.prenom_personne
         ])
 
-    # Recherche sur num_acte — poids élevé
+    # Recherche sur num_acte 
     for acte in Acte.objects.all():
         scorer(acte.id_acte, [acte.num_acte or ''])
 

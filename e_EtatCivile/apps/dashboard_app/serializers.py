@@ -39,6 +39,7 @@ class AgentReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Agent
         fields = ['matricule', 'nom_user', 'prenom_user', 'email', 'role']
+        
 class UtilisateurSerializer(serializers.ModelSerializer):
     class Meta:
         model = Utilisateur

@@ -1,7 +1,7 @@
 class TrieNode:
     def __init__(self):
-        self.lettre  = {}   # table de hachage : caractère → nœud
-        self.actes_ids = []   # IDs des actes associés à ce préfixe
+        self.lettre  = {}   
+        self.actes_ids = []   
 
 class Trie:
     def __init__(self):

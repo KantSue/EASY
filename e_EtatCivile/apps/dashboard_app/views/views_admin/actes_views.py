@@ -54,7 +54,7 @@ class ActesListView(APIView):
             data.append({
                 "id_acte"  : acte.id_acte,
                 "num_acte" : acte.num_acte,
-                "date_acte": str(acte.date_acte),
+                "date_acte": str(acte.date_acte), 
                 "type_acte": acte.type_acte.libelle if acte.type_acte else "N/A",
                 "id_type"  : type_id,
                 "personnes": [

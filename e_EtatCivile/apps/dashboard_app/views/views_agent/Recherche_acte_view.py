@@ -70,10 +70,10 @@ class SuggestionsView(APIView):
         if len(query) < 2:
             return Response([], status=200)
 
-        trie = construire_trie()          # reconstruit à chaque requête
+        trie = construire_trie()          
         ids  = trie.search_prefix(query)
         actes = Acte.objects.filter(id_acte__in=ids)
-        # Au lieu de retourner juste les actes, enrichissez avec les personnes
+
         resultats = []
         for acte in actes:
             # Chercher les personnes liées à cet acte

@@ -1,19 +1,10 @@
-"""
-F8 — Redirection vers l'arrondissement disponible le plus proche
-Algorithme : Dijkstra avec file de priorité (tas binaire)
-Complexité  : O((V + E) log V)
-"""
+
 import heapq
 from apps.dashboard_app.models import Arondissement, LiaisonArondissement
 
 
 def construire_graphe():
-    """
-    Construit le graphe depuis la base de données.
-    Retourne :
-        graphe  : dict {id_aro: [(voisin_id, distance), ...]}
-        statuts : dict {id_aro: 'disponible'/'indisponible'}
-    """
+    
     graphe  = {}
     statuts = {}
 
@@ -32,12 +23,7 @@ def construire_graphe():
 
 
 def dijkstra(id_arondissement_depart):
-    """
-    Trouve l'arrondissement disponible le plus proche
-    depuis id_arondissement_depart.
-
-    Retourne : (arondissement, distance) ou (None, inf)
-    """
+  
     graphe, statuts = construire_graphe()
 
     distances = {node: float('inf') for node in graphe}
@@ -47,7 +33,7 @@ def dijkstra(id_arondissement_depart):
     while heap:
         dist_actuelle, aro_actuel = heapq.heappop(heap)
 
-        # Commune disponible trouvée — pas le départ
+       
         if aro_actuel != id_arondissement_depart:
             if statuts.get(aro_actuel) == 'disponible':
                 aro = Arondissement.objects.get(id_arondissement=aro_actuel)
