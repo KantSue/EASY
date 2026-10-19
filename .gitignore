@@ -8,16 +8,14 @@ db.sqlite3
 media/
 staticfiles/
 
-# Environnement
+# Environnement (contient aussi les clés MVola)
 .env
+env/
 
-# Base de données
+# Base de données : seul baseDeDonner/e_etatcivil.sql (structure, sans données) est versionné
 *.sql
-baseDeDonner/
+!baseDeDonner/e_etatcivil.sql
 
 # OS
 Thumbs.db
 .DS_Store
-
-#mvola
-.env
