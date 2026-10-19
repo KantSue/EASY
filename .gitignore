@@ -17,9 +17,9 @@ dist/
 .env
 env/
 
-# Base de données : seul baseDeDonner/e_etatcivil.sql (structure, sans données) est versionné
+# Base de données
 *.sql
-!baseDeDonner/e_etatcivil.sql
+baseDeDonner/
 
 # OS
 Thumbs.db

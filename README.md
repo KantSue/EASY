@@ -54,7 +54,6 @@ Ces structures sont implémentées à la main, sans bibliothèque.
 ├── Frontend/
 │   ├── webfront           Application web (React + Vite)
 │   └── eEtatCivilMobile   Application mobile (Expo)
-├── baseDeDonner/          Script SQL de création de la base
 └── docs/                  Cahier des charges et diagrammes UML
 ```
 
@@ -66,8 +65,8 @@ Python 3.13, Node.js 20+, MySQL 8+ (ou XAMPP / WAMP).
 ### 1. Base de données
 ```bash
 mysql -u root -e "CREATE DATABASE etat_civil CHARACTER SET utf8mb4;"
-mysql -u root etat_civil < baseDeDonner/e_etatcivil.sql
 ```
+Le script SQL de création des tables n'est pas inclus dans ce dépôt ; il est disponible sur demande.
 
 ### 2. Backend
 ```bash
