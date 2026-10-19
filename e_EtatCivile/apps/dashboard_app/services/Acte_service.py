@@ -12,10 +12,7 @@ prefixes={
 
 
 def generer_qr_code(num_acte):
-    """
-    Génère un QR code contenant l'URL de vérification de l'acte.
-    Retourne un objet BytesIO (image en mémoire — pas sauvegardée sur disque).
-    """
+  
     url = f"http://localhost:8000/dashboard/verifier/?ref={num_acte}"
 
     qr = qrcode.QRCode(box_size=4, border=2)

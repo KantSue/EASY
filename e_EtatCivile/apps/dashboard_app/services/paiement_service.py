@@ -1,9 +1,4 @@
-"""
-F6 — Service de paiement simulé
-=================================
-Simulation MVola/Orange Money via UUID
-En production : intégration API MVola (developer.mvola.mg)
-"""
+
 
 import uuid
 import random

@@ -14,7 +14,6 @@ from apps.dashboard_app.models import Demande,Paiement
 class DemandeActeViews(APIView):
 
     def post(self, request):
-        """Créer une demande — naissance, mariage ou décès."""
         serializer = DemandeCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -141,11 +140,9 @@ class ActeDetailView(APIView):
         } for ap in acte_personnes]
         
         
-        # Après avoir récupéré l'acte — chercher la demande liée
-        # Chercher d'abord une demande avec paiement confirmé
         acte = Acte.objects.select_related('type_acte').get(id_acte=id_acte)
 
-        # Chercher la demande — utiliser id_demande si fourni
+        
         id_demande_param = request.GET.get('id_demande', None)
 
         if id_demande_param:
@@ -157,9 +154,7 @@ class ActeDetailView(APIView):
                 num_acte=acte.num_acte,
             ).select_related('id_citoyen__id_user').first()
 
-        # Si pas de demande VALIDER, prendre EN ATTENTE avec paiement confirmé
         if not demande_liee:
-            # Chercher parmi toutes les demandes celle avec paiement confirmé
             toutes_demandes = Demande.objects.filter(
                 num_acte=acte.num_acte
             ).select_related('id_citoyen__id_user')

@@ -22,7 +22,6 @@ def construire_trie():
     trie = Trie()
 
     
-    # Une seule boucle — toutes les personnes via acte_personne
     for ap in ActePersonne.objects.select_related('id_personne', 'id_acte'):
         trie.insert(ap.id_personne.nom_personne,    ap.id_acte.id_acte)
         trie.insert(ap.id_personne.prenom_personne, ap.id_acte.id_acte)

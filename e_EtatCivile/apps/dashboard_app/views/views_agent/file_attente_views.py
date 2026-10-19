@@ -34,7 +34,6 @@ class FileAttenteView(APIView):
                     'id_type_acte', 'id_commune', 'id_arrondissement', 'id_citoyen'
                 )
             else:
-                # Autre commune → filtre par commune
                 demandes_qs = Demande.objects.filter(
                     statut_demande='EN ATTENTE',
                     id_commune=id_commune

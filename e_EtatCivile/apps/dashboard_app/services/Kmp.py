@@ -32,8 +32,8 @@ def kmp_search(text, pattern):
             i += 1
             j += 1
         if j == len(pattern):
-            positions.append(i - j)   # position de début
-            j = lps[j - 1]            # continuer la recherche
+            positions.append(i - j)   
+            j = lps[j - 1]            #
         elif i < len(text) and text[i] != pattern[j]:
             if j != 0:
                 j = lps[j - 1]

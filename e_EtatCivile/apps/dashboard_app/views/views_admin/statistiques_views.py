@@ -20,10 +20,7 @@ def check_admin(request):
 
 
 class StatistiquesView(APIView):
-    """
-    GET /dashboard/stats/
-    Tableau de bord global — admin uniquement.
-    """
+  
     def get(self, request):
         if not check_admin(request):
             return Response({"error": "Acces reserve aux administrateurs."}, status=403)

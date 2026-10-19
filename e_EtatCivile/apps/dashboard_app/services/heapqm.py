@@ -5,7 +5,7 @@ class MinHeap:
     def __init__(self):
         self.heap = []
 
-    # ── Helpers
+    # Helpers
 
     def taille(self):
         return len(self.heap)
@@ -28,7 +28,7 @@ class MinHeap:
     def _droite(self, i):
         return 2 * i + 2
 
-    # ── Montée 
+    # Montée 
 
     def _monter(self, i):
         while i > 0:
@@ -39,7 +39,7 @@ class MinHeap:
             else:
                 break
 
-    # ── Descente
+    #  Descente
 
     def _descendre(self, i):
         n = self.taille()
@@ -59,7 +59,7 @@ class MinHeap:
             else:
                 break
 
-    # ── API publique 
+    # publique 
 
     def push(self, item):
         self.heap.append(item)

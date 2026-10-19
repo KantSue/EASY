@@ -35,12 +35,12 @@ class GeneratePDFView(APIView):
         # Générer le PDF
         pdf_buffer = generer_pdf_acte(demande.num_acte, id_demande=id_demande)
 
-        # Sauvegarder le PDF sur le serveur
+        # Sauvegarder le PDF 
         pdf_bytes = pdf_buffer.read()
         nom_fichier = f"actes/{demande.num_acte}_{id_demande}.pdf"
         chemin = default_storage.save(nom_fichier, ContentFile(pdf_bytes))
 
-        # Archiver — statut TERMINER + url_pdf
+        # Archiver 
         demande.statut_demande = 'TERMINER'
         demande.date_maj       = timezone.now().date()
         demande.url_pdf        = chemin
@@ -117,12 +117,13 @@ class EnvoyerPDFView(APIView):
         # Lire le PDF
         import os
         from django.conf import settings as django_settings
+        
         pdf_path = os.path.join(django_settings.MEDIA_ROOT, demande.url_pdf)
 
         if not os.path.exists(pdf_path):
             return Response({"error": "Fichier PDF introuvable"}, status=404)
 
-        # Envoyer par email avec pièce jointe
+        # Envoyer
         from django.core.mail import EmailMessage
         mail = EmailMessage(
             subject = f"Votre acte d'état civil — {demande.num_acte}",

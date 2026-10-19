@@ -32,10 +32,8 @@ def servicesActeNaissance(request):
     except Utilisateur.DoesNotExist:
         return JsonResponse({'error': 'Utilisateur introuvable'})
 
-    # ✅ ne pas écraser "date"
     today = date.today()
 
-    # ✅ initialiser les formulaires (important)
     enfant_form = PersonneForm(prefix='enfant')
     pere_form = PersonneForm(prefix='pere')
     mere_form = PersonneForm(prefix='mere')
@@ -56,7 +54,6 @@ def servicesActeNaissance(request):
             pere = pere_form.save()
             mere = mere_form.save()
 
-            # ⚠️ vérifie le nom du champ (num_acte ou nume_acte)
             acte = Acte.objects.create(
                 num_acte=generateNumActe(),
                 type="acte naissance",
@@ -74,7 +71,7 @@ def servicesActeNaissance(request):
                 type_acte=acteN,
                 date_depot=today,
                 statut_demande="en attente",
-                id_citoyen=user  # mieux que user.id_user si ForeignKey
+                id_citoyen=user  
             )
 
             return JsonResponse({

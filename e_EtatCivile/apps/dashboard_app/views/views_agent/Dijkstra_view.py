@@ -14,7 +14,6 @@ class VerifierArondissementView(APIView):
         except Arondissement.DoesNotExist:
             return Response({"message": "Arrondissement introuvable"}, status=404)
 
-        # Arrondissement disponible
         if aro.statut == 'disponible':
             return Response({
                 "disponible"      : True,
@@ -23,7 +22,7 @@ class VerifierArondissementView(APIView):
                 "message"         : f"L'arrondissement {aro.nom_arondissement} est disponible."
             }, status=200)
 
-        # Arrondissement indisponible → Dijkstra
+        
         aro_proche, distance = dijkstra(id_arondissement)
 
         if aro_proche is None:
