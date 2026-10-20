@@ -9,7 +9,6 @@ Le projet comprend une **API REST Django**, une **application web React** et une
 **Citoyen**
 - Inscription, connexion, récupération du mot de passe
 - Demande d'acte (naissance, mariage, décès) avec pièces justificatives
-- Paiement mobile **MVola** (sandbox)
 - Suivi de l'état des demandes et téléchargement de l'acte en PDF
 - Choix de l'arrondissement, avec redirection automatique vers le plus proche s'il est indisponible
 
